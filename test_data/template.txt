@@ -1,0 +1,11 @@
+{{> header.txt }}
+
+# Segments
+
+## {{ segments.engineer.title }}
+Pain: {{ segments.engineer.pain }}
+
+## {{ segments.sales.title }}
+Pain: {{ segments.sales.pain }}
+
+Use \{{ variable }} for variables.

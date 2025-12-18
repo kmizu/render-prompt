@@ -1,0 +1,36 @@
+[package]
+name = "render-prompt"
+version = "0.1.0"
+edition = "2021"
+authors = ["Kota Mizushima"]
+description = "A template engine with variable substitution and include functionality"
+license = "MIT"
+
+[[bin]]
+name = "render-prompt"
+path = "src/main.rs"
+
+[dependencies]
+# CLI parser
+clap = { version = "4.5", features = ["derive", "cargo"] }
+
+# YAML/JSON parser
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+serde_yaml = "0.9"
+
+# Error handling
+thiserror = "1.0"
+anyhow = "1.0"
+
+# Path operations
+path-clean = "1.0"
+
+# Regular expressions
+regex = "1.10"
+lazy_static = "1.4"
+
+[dev-dependencies]
+tempfile = "3.10"
+assert_cmd = "2.0"
+predicates = "3.1"

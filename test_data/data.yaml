@@ -1,0 +1,9 @@
+name: Alice
+age: 30
+segments:
+  engineer:
+    title: "Backend Engineer"
+    pain: "Specifications keep changing"
+  sales:
+    title: "Enterprise Sales"
+    pain: "Need better proposals"

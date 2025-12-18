@@ -1,0 +1,12 @@
+=== Alice's Profile ===
+Age: 30
+
+# Segments
+
+## Backend Engineer
+Pain: Specifications keep changing
+
+## Enterprise Sales
+Pain: Need better proposals
+
+Use {{ variable }} for variables.
