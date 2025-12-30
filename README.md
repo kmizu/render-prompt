@@ -18,14 +18,14 @@
 cargo build --release
 ```
 
-バイナリは `target/release/render-prompt` に生成されます。
+バイナリは `target/release/rp` に生成されます。
 
 ## 使い方
 
 ### 基本的な使い方
 
 ```bash
-render-prompt --template template.txt --data data.yaml
+rp --template template.txt --data data.yaml
 ```
 
 ### 実例
@@ -60,7 +60,7 @@ segments:
 
 **実行:**
 ```bash
-render-prompt --template template.txt --data data.yaml
+rp --template template.txt --data data.yaml
 ```
 
 **出力:**
@@ -93,7 +93,7 @@ render-prompt --template template.txt --data data.yaml
 複数のデータファイルを指定すると、Deep mergeで結合されます（後勝ち）：
 
 ```bash
-render-prompt -t template.txt -d base.yaml -d prod.yaml
+rp -t template.txt -d base.yaml -d prod.yaml
 ```
 
 ### 出力オプション
@@ -103,7 +103,7 @@ render-prompt -t template.txt -d base.yaml -d prod.yaml
 | `--out <PATH>` | `-o` | 出力ファイルのパス。未指定時は標準出力 |
 
 ```bash
-render-prompt -t template.txt -d data.yaml -o output.txt
+rp -t template.txt -d data.yaml -o output.txt
 ```
 
 ### インクルード設定
@@ -114,7 +114,7 @@ render-prompt -t template.txt -d data.yaml -o output.txt
 | `--max-include-depth <N>` | インクルードの最大深さ | 20 |
 
 ```bash
-render-prompt -t template.txt -d data.yaml --root ./templates --max-include-depth 10
+rp -t template.txt -d data.yaml --root ./templates --max-include-depth 10
 ```
 
 ### エラー処理オプション
@@ -126,10 +126,10 @@ render-prompt -t template.txt -d data.yaml --root ./templates --max-include-dept
 
 ```bash
 # 未定義変数でエラー終了
-render-prompt -t template.txt -d data.yaml --strict
+rp -t template.txt -d data.yaml --strict
 
 # 未定義変数を警告表示
-render-prompt -t template.txt -d data.yaml --warn-undefined
+rp -t template.txt -d data.yaml --warn-undefined
 ```
 
 ## テンプレート構文
@@ -270,7 +270,7 @@ app:
 ```
 
 ```bash
-render-prompt -t template.txt -d base.yaml -d prod.yaml
+rp -t template.txt -d base.yaml -d prod.yaml
 ```
 
 **結果:**
@@ -314,7 +314,7 @@ Undefined variable 'user.email' at template.txt:12:5
 AIプロンプトを管理する場合：
 
 ```bash
-render-prompt \
+rp \
   --template prompts/base.txt \
   --data config/segments.yaml \
   --data config/examples.yaml \
@@ -325,16 +325,16 @@ render-prompt \
 
 ```bash
 # 開発環境
-render-prompt -t config.template -d base.yaml -d dev.yaml -o config.dev
+rp -t config.template -d base.yaml -d dev.yaml -o config.dev
 
 # 本番環境
-render-prompt -t config.template -d base.yaml -d prod.yaml -o config.prod
+rp -t config.template -d base.yaml -d prod.yaml -o config.prod
 ```
 
 ### ドキュメント生成
 
 ```bash
-render-prompt \
+rp \
   --template docs/template.md \
   --data project-info.yaml \
   --out README.md
@@ -342,7 +342,7 @@ render-prompt \
 
 ## 制限事項
 
-render-promptは意図的にシンプルに保たれています。以下の機能は**サポートされていません**：
+rpは意図的にシンプルに保たれています。以下の機能は**サポートされていません**：
 
 - ❌ 条件分岐（if/else）
 - ❌ ループ（for/each）

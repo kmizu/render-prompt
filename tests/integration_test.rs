@@ -14,7 +14,7 @@ fn test_basic_execution() {
     let template = dir.path().join("template.txt");
     fs::write(&template, "Hello, {{ name }}! Age: {{ age }}").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("--template")
         .arg(&template)
@@ -43,7 +43,7 @@ fn test_multiple_data_files_merge() {
     )
     .unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -69,7 +69,7 @@ fn test_output_file() {
 
     let output = dir.path().join("output.txt");
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -95,7 +95,7 @@ fn test_strict_mode_undefined_variable() {
     let template = dir.path().join("template.txt");
     fs::write(&template, "{{ name }} {{ undefined }}").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -119,7 +119,7 @@ fn test_non_strict_mode_undefined_variable() {
     let template = dir.path().join("template.txt");
     fs::write(&template, "Hello {{ name }}{{ undefined }}!").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -144,7 +144,7 @@ fn test_include_basic() {
     let data = dir.path().join("data.yaml");
     fs::write(&data, "value: 42").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -175,7 +175,7 @@ fn test_nested_includes() {
     let data = dir.path().join("data.yaml");
     fs::write(&data, "var1: A\nvar2: B\nvar3: C").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -197,7 +197,7 @@ fn test_circular_include_error() {
     fs::write(&file_a, "A {{> b.txt }}").unwrap();
     fs::write(&file_b, "B {{> a.txt }}").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&file_a)
@@ -224,7 +224,7 @@ fn test_depth_limit_exceeded() {
 
     let template = dir.path().join("0.txt");
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -239,7 +239,7 @@ fn test_depth_limit_exceeded() {
 /// CLI統合テスト: 存在しないテンプレートファイル
 #[test]
 fn test_nonexistent_template() {
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg("/nonexistent/template.txt")
@@ -255,7 +255,7 @@ fn test_nonexistent_data_file() {
     let template = dir.path().join("template.txt");
     fs::write(&template, "Hello").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -277,7 +277,7 @@ fn test_invalid_yaml() {
     let data = dir.path().join("data.yaml");
     fs::write(&data, "invalid: yaml: syntax: error:").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -299,7 +299,7 @@ fn test_invalid_json() {
     let data = dir.path().join("data.json");
     fs::write(&data, "{invalid json}").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -321,7 +321,7 @@ fn test_escape_syntax() {
     let data = dir.path().join("data.yaml");
     fs::write(&data, "var: Hello").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -367,7 +367,7 @@ Location: {{ company.location.city }}, {{ company.location.country }}"#,
     )
     .unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -399,7 +399,7 @@ fn test_json_data_format() {
     let template = dir.path().join("template.txt");
     fs::write(&template, "{{ user.name }}, {{ user.age }}, {{ active }}").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -424,7 +424,7 @@ fn test_mixed_yaml_and_json() {
     let template = dir.path().join("template.txt");
     fs::write(&template, "{{ from_yaml }} and {{ from_json }}").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -448,7 +448,7 @@ fn test_empty_data_file() {
     let template = dir.path().join("template.txt");
     fs::write(&template, "No data: {{ missing }}").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -467,7 +467,7 @@ fn test_no_data_file() {
     let template = dir.path().join("template.txt");
     fs::write(&template, "No variables").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -484,7 +484,7 @@ fn test_empty_template() {
     let template = dir.path().join("template.txt");
     fs::write(&template, "").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -518,7 +518,7 @@ fn test_many_variables() {
     }
     expected.push('\n');
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -545,7 +545,7 @@ fn test_root_option() {
     let data = dir.path().join("data.yaml");
     fs::write(&data, "value: 123").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -573,7 +573,7 @@ fn test_special_characters() {
     let template = dir.path().join("template.txt");
     fs::write(&template, "{{ special }}").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -594,7 +594,7 @@ fn test_unicode_characters() {
     let template = dir.path().join("template.txt");
     fs::write(&template, "{{ message }} {{ emoji }}").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -616,7 +616,7 @@ fn test_object_as_json() {
     let template = dir.path().join("template.txt");
     fs::write(&template, "Object: {{ obj }}").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -639,7 +639,7 @@ fn test_array_as_json() {
     let template = dir.path().join("template.txt");
     fs::write(&template, "Array: {{ items }}").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -654,7 +654,7 @@ fn test_array_as_json() {
 /// CLI統合テスト: バージョン表示
 #[test]
 fn test_version_flag() {
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("--version")
         .assert()
@@ -665,7 +665,7 @@ fn test_version_flag() {
 /// CLI統合テスト: ヘルプ表示
 #[test]
 fn test_help_flag() {
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("--help")
         .assert()
@@ -677,7 +677,7 @@ fn test_help_flag() {
 /// CLI統合テスト: 引数不足
 #[test]
 fn test_missing_required_args() {
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .assert()
         .failure()
@@ -691,7 +691,7 @@ fn test_invalid_max_depth_zero() {
     let template = dir.path().join("template.txt");
     fs::write(&template, "test").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -709,7 +709,7 @@ fn test_invalid_max_depth_too_large() {
     let template = dir.path().join("template.txt");
     fs::write(&template, "test").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)

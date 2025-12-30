@@ -286,7 +286,7 @@ pub fn load_file<P: AsRef<Path>>(path: P) -> Result<Value, RenderError> {
 バグの内容を簡潔に説明
 
 ## 再現手順
-1. `render-prompt -t ...`を実行
+1. `rp -t ...`を実行
 2. エラーが発生
 
 ## 期待される動作
@@ -298,7 +298,7 @@ pub fn load_file<P: AsRef<Path>>(path: P) -> Result<Value, RenderError> {
 ## 環境
 - OS: macOS 14.0
 - Rust: 1.75.0
-- render-prompt: 0.1.0
+- rp: 0.1.0
 ```
 
 ### 2. ブランチの作成
@@ -359,7 +359,7 @@ GitHubでPull Requestを作成。以下を含めてください：
 
 ### 原則
 
-render-promptは**最小限の機能セット**を維持します：
+rpは**最小限の機能セット**を維持します：
 
 ✅ **受け入れられる機能:**
 - パフォーマンス改善
@@ -380,7 +380,7 @@ render-promptは**最小限の機能セット**を維持します：
 - [ ] 既存の機能で実現できないか検討した
 - [ ] データ側で解決できないか検討した
 - [ ] 他のツール（Mustache、Jinja2など）でも実現困難か確認した
-- [ ] render-promptの設計思想に沿っているか確認した
+- [ ] rpの設計思想に沿っているか確認した
 
 ## デバッグ
 
@@ -403,9 +403,9 @@ VS Codeの場合、`.vscode/launch.json`を作成：
     {
       "type": "lldb",
       "request": "launch",
-      "name": "Debug render-prompt",
+      "name": "Debug rp",
       "cargo": {
-        "args": ["build", "--bin=render-prompt"]
+        "args": ["build", "--bin=rp"]
       },
       "args": [
         "--template", "test_data/template.txt",
@@ -426,7 +426,7 @@ VS Codeの場合、`.vscode/launch.json`を作成：
 cargo build --release
 
 # 大きなファイルでテスト
-time ./target/release/render-prompt \
+time ./target/release/rp \
   -t large_template.txt \
   -d large_data.yaml
 ```

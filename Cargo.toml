@@ -7,7 +7,7 @@ description = "A template engine with variable substitution and include function
 license = "MIT"
 
 [[bin]]
-name = "render-prompt"
+name = "rp"
 path = "src/main.rs"
 
 [dependencies]

@@ -15,7 +15,7 @@ fn test_very_long_variable_name() {
     let template = dir.path().join("template.txt");
     fs::write(&template, format!("{{{{ {} }}}}", long_name)).unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -38,7 +38,7 @@ fn test_very_long_variable_value() {
     let template = dir.path().join("template.txt");
     fs::write(&template, "{{ var }}").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -60,7 +60,7 @@ fn test_whitespace_only_variable() {
     let template = dir.path().join("template.txt");
     fs::write(&template, "{{    }}").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -81,7 +81,7 @@ fn test_dot_only_path() {
     let template = dir.path().join("template.txt");
     fs::write(&template, "{{ . }}").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -102,7 +102,7 @@ fn test_consecutive_dots() {
     let template = dir.path().join("template.txt");
     fs::write(&template, "{{ a..b }}").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -123,7 +123,7 @@ fn test_array_out_of_bounds() {
     let template = dir.path().join("template.txt");
     fs::write(&template, "{{ items.10 }}").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -145,7 +145,7 @@ fn test_negative_array_index() {
     let template = dir.path().join("template.txt");
     fs::write(&template, "{{ items.-1 }}").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -166,7 +166,7 @@ fn test_multiline_variable_value() {
     let template = dir.path().join("template.txt");
     fs::write(&template, "{{ text }}").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -189,7 +189,7 @@ fn test_tab_characters() {
     let template = dir.path().join("template.txt");
     fs::write(&template, "{{ text }}").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -211,7 +211,7 @@ fn test_braces_in_value() {
     let template = dir.path().join("template.txt");
     fs::write(&template, "{{ text }}").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -230,7 +230,7 @@ fn test_consecutive_escapes() {
     let template = dir.path().join("template.txt");
     fs::write(&template, r"\{{ var1 }} \{{ var2 }} \{{ var3 }}").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -250,7 +250,7 @@ fn test_mixed_escape_and_variables() {
     let template = dir.path().join("template.txt");
     fs::write(&template, r"{{ real }} and \{{ fake }}").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -276,7 +276,7 @@ fn test_deeply_nested_includes() {
         }
     }
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(dir.path().join("level0.txt"))
@@ -300,7 +300,7 @@ fn test_same_file_multiple_includes() {
     let data = dir.path().join("data.yaml");
     fs::write(&data, "value: X").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -322,7 +322,7 @@ fn test_empty_include_file() {
     let template = dir.path().join("template.txt");
     fs::write(&template, "Before{{> empty.txt }}After").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -342,7 +342,7 @@ fn test_include_path_with_spaces() {
     let template = dir.path().join("template.txt");
     fs::write(&template, "{{> file with spaces.txt }}").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -367,7 +367,7 @@ fn test_large_data_file() {
     let template = dir.path().join("template.txt");
     fs::write(&template, "{{ vars.var0 }}, {{ vars.var500 }}, {{ vars.var999 }}").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -393,7 +393,7 @@ fn test_deeply_nested_object() {
     let template = dir.path().join("template.txt");
     fs::write(&template, "{{ a.b.c.d.e.f.g }}").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -419,7 +419,7 @@ fn test_null_values() {
     )
     .unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -446,7 +446,7 @@ fn test_numeric_key_names() {
     let template = dir.path().join("template.txt");
     fs::write(&template, "{{ 123 }}").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -468,7 +468,7 @@ fn test_floating_point_numbers() {
     let template = dir.path().join("template.txt");
     fs::write(&template, "{{ pi }}, {{ large }}, {{ small }}").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -490,7 +490,7 @@ fn test_large_numbers() {
     let template = dir.path().join("template.txt");
     fs::write(&template, "{{ big }}").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -512,7 +512,7 @@ fn test_base64_data() {
     let template = dir.path().join("template.txt");
     fs::write(&template, "{{ binary }}").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -531,7 +531,7 @@ fn test_mixed_line_endings() {
     let template = dir.path().join("template.txt");
     fs::write(&template, "Line1\nLine2\rLine3\r\nLine4").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -549,7 +549,7 @@ fn test_utf8_bom() {
     content.extend_from_slice(b"Test");
     fs::write(&template, content).unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -568,7 +568,7 @@ fn test_emoji_sequences() {
     let template = dir.path().join("template.txt");
     fs::write(&template, "{{ emoji }}").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)

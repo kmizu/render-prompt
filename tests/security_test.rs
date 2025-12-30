@@ -17,7 +17,7 @@ fn test_path_traversal_parent_directory() {
     let template = subdir.join("template.txt");
     fs::write(&template, "{{> ../secret.txt }}").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -36,7 +36,7 @@ fn test_path_traversal_absolute_path() {
     let template = dir.path().join("template.txt");
     fs::write(&template, "{{> /etc/passwd }}").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -59,7 +59,7 @@ fn test_path_traversal_multiple_parents() {
     let template = level3.join("template.txt");
     fs::write(&template, "{{> ../../../secret.txt }}").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -78,7 +78,7 @@ fn test_path_traversal_url_like() {
     let template = dir.path().join("template.txt");
     fs::write(&template, "{{> file://etc/passwd }}").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -106,7 +106,7 @@ fn test_path_traversal_symlink() {
     let template = templates.join("template.txt");
     fs::write(&template, "{{> link.txt }}").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -125,7 +125,7 @@ fn test_dos_circular_include_immediate() {
     let file = dir.path().join("file.txt");
     fs::write(&file, "{{> file.txt }}").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&file)
@@ -149,7 +149,7 @@ fn test_dos_depth_limit() {
         }
     }
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(dir.path().join("0.txt"))
@@ -170,7 +170,7 @@ fn test_large_file_handling() {
     let template = dir.path().join("template.txt");
     fs::write(&template, large_content.clone()).unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -190,7 +190,7 @@ fn test_special_characters_in_filename() {
     let template = dir.path().join("template.txt");
     fs::write(&template, "{{> file_with_special_!@#.txt }}").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -207,7 +207,7 @@ fn test_null_character_handling() {
     let template = dir.path().join("template.txt");
     fs::write(&template, "Before\0After").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -223,7 +223,7 @@ fn test_command_injection_filename() {
     let template = dir.path().join("template.txt");
     fs::write(&template, "{{> file; rm -rf / }}").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -242,7 +242,7 @@ fn test_script_injection_in_data() {
     let template = dir.path().join("template.txt");
     fs::write(&template, "{{ script }}").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -264,7 +264,7 @@ fn test_sql_injection_like_string() {
     let template = dir.path().join("template.txt");
     fs::write(&template, "{{ query }}").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -283,7 +283,7 @@ fn test_no_environment_variable_access() {
     let template = dir.path().join("template.txt");
     fs::write(&template, "{{ $HOME }}{{ env.HOME }}{{ ENV.HOME }}").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -303,7 +303,7 @@ fn test_path_normalization() {
     let template = dir.path().join("template.txt");
     fs::write(&template, "{{> ./file.txt }}").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -325,7 +325,7 @@ fn test_complex_path_manipulation() {
     let template = dir.path().join("template.txt");
     fs::write(&template, "{{> ./sub/../sub/./file.txt }}").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -347,7 +347,7 @@ fn test_complex_directory_traversal() {
     let template = allowed.join("template.txt");
     fs::write(&template, "{{> ./../secret.txt }}").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -366,7 +366,7 @@ fn test_zip_slip_like_attack() {
     let template = dir.path().join("template.txt");
     fs::write(&template, "{{> ../../../../../../../../etc/passwd }}").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -386,7 +386,7 @@ fn test_control_characters() {
     let template = dir.path().join("template.txt");
     fs::write(&template, "{{ text }}").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -408,7 +408,7 @@ fn test_backslash_handling() {
     let template = dir.path().join("template.txt");
     fs::write(&template, "{{ path }}").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -431,7 +431,7 @@ fn test_no_recursive_object_reference() {
     let template = dir.path().join("template.txt");
     fs::write(&template, "{{ obj.self }}").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)

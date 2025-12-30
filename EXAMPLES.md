@@ -1,6 +1,6 @@
-# render-prompt 使用例集
+# rp 使用例集
 
-このドキュメントでは、render-promptの実践的な使用例を紹介します。
+このドキュメントでは、rpの実践的な使用例を紹介します。
 
 ## 目次
 
@@ -28,7 +28,7 @@ greeting: こんにちは
 
 **実行:**
 ```bash
-render-prompt -t template.txt -d data.yaml
+rp -t template.txt -d data.yaml
 ```
 
 **出力:**
@@ -125,7 +125,7 @@ appeals:
 
 **実行:**
 ```bash
-render-prompt \
+rp \
   -t prompt.txt \
   -d segments.yaml \
   -d appeals.yaml \
@@ -169,10 +169,10 @@ style: "フォーマル"
 **実行:**
 ```bash
 # バリエーションA
-render-prompt -t template.txt -d base_prompt.yaml -d variant_a.yaml -o prompt_a.txt
+rp -t template.txt -d base_prompt.yaml -d variant_a.yaml -o prompt_a.txt
 
 # バリエーションB
-render-prompt -t template.txt -d base_prompt.yaml -d variant_b.yaml -o prompt_b.txt
+rp -t template.txt -d base_prompt.yaml -d variant_b.yaml -o prompt_b.txt
 ```
 
 ## 設定ファイル生成
@@ -219,7 +219,7 @@ server {
 
 **実行:**
 ```bash
-render-prompt -t nginx.conf.template -d config.yaml -o nginx.conf
+rp -t nginx.conf.template -d config.yaml -o nginx.conf
 ```
 
 ### Docker Compose
@@ -378,10 +378,10 @@ port = {{ database.port }}
 **実行:**
 ```bash
 # 開発環境
-render-prompt -t config.template -d base.yaml -d dev.yaml -o config.dev.ini
+rp -t config.template -d base.yaml -d dev.yaml -o config.dev.ini
 
 # 本番環境
-render-prompt -t config.template -d base.yaml -d prod.yaml -o config.prod.ini
+rp -t config.template -d base.yaml -d prod.yaml -o config.prod.ini
 ```
 
 ## 高度なテクニック
@@ -432,7 +432,7 @@ copyright: "© 2024 MyCompany"
 
 **data.yaml:**
 ```yaml
-tool_name: "render-prompt"
+tool_name: "rp"
 example_syntax: "変数を埋め込む"
 ```
 
@@ -466,7 +466,7 @@ Hello, {{ name }}!
 
 **実行:**
 ```bash
-render-prompt -t template.txt
+rp -t template.txt
 ```
 
 **出力:**
@@ -482,7 +482,7 @@ Hello, !
 
 ```bash
 # 未定義変数があるとエラーで終了
-render-prompt -t template.txt -d data.yaml --strict
+rp -t template.txt -d data.yaml --strict
 ```
 
 これにより、タイポや設定漏れを防げます。
@@ -526,13 +526,13 @@ project/
 .PHONY: generate-dev generate-prod
 
 generate-dev:
-	render-prompt -t templates/config.template \
+	rp -t templates/config.template \
 	  -d data/base.yaml \
 	  -d data/dev.yaml \
 	  -o output/dev/config.ini
 
 generate-prod:
-	render-prompt -t templates/config.template \
+	rp -t templates/config.template \
 	  -d data/base.yaml \
 	  -d data/prod.yaml \
 	  -o output/prod/config.ini
@@ -547,7 +547,7 @@ generate-prod:
 **解決策**: `--strict`または`--warn-undefined`を使用
 
 ```bash
-render-prompt -t template.txt -d data.yaml --warn-undefined
+rp -t template.txt -d data.yaml --warn-undefined
 ```
 
 ### インクルードが見つからない
@@ -557,7 +557,7 @@ render-prompt -t template.txt -d data.yaml --warn-undefined
 **解決策**: `--root`オプションでルートディレクトリを指定
 
 ```bash
-render-prompt -t template.txt -d data.yaml --root ./templates
+rp -t template.txt -d data.yaml --root ./templates
 ```
 
 ### 循環インクルードエラー
@@ -568,7 +568,7 @@ render-prompt -t template.txt -d data.yaml --root ./templates
 
 ## まとめ
 
-render-promptは、シンプルながら強力なテンプレートツールです。
+rpは、シンプルながら強力なテンプレートツールです。
 複雑なロジックは持たないため、データの準備が重要になります。
 
 より詳細な情報は[README.md](README.md)を参照してください。

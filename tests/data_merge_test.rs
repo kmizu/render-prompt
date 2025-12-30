@@ -19,7 +19,7 @@ fn test_merge_three_files() {
     let template = dir.path().join("template.txt");
     fs::write(&template, "{{ a }},{{ b }},{{ c }},{{ d }},{{ e }}").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -72,7 +72,7 @@ user:
     )
     .unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -99,7 +99,7 @@ fn test_merge_array_override() {
     let template = dir.path().join("template.txt");
     fs::write(&template, "{{ items.0 }},{{ items.1 }}").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -126,7 +126,7 @@ fn test_merge_type_change() {
     let template = dir.path().join("template.txt");
     fs::write(&template, "{{ value }}").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -153,7 +153,7 @@ fn test_merge_object_to_array() {
     let template = dir.path().join("template.txt");
     fs::write(&template, "{{ data.0 }}").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -209,7 +209,7 @@ app:
     )
     .unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -236,7 +236,7 @@ fn test_merge_with_null() {
     let template = dir.path().join("template.txt");
     fs::write(&template, "[{{ value }}]").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -263,7 +263,7 @@ fn test_merge_with_empty_object() {
     let template = dir.path().join("template.txt");
     fs::write(&template, "{{ a }},{{ b }}").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -298,7 +298,7 @@ fn test_merge_very_deep_nesting() {
     let template = dir.path().join("template.txt");
     fs::write(&template, "{{ a.b.c.d.e.value }},{{ a.b.c.d.e.extra }}").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -325,7 +325,7 @@ fn test_merge_mixed_type_arrays() {
     let template = dir.path().join("template.txt");
     fs::write(&template, "{{ items.0 }},{{ items.1 }}").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -352,7 +352,7 @@ fn test_merge_boolean_and_null() {
     let template = dir.path().join("template.txt");
     fs::write(&template, "[{{ flag }}][{{ opt }}]").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -387,7 +387,7 @@ fn test_merge_many_keys() {
     let template = dir.path().join("template.txt");
     fs::write(&template, "{{ key0 }},{{ key250 }},{{ key500 }},{{ key749 }}").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
@@ -403,7 +403,7 @@ fn test_merge_many_keys() {
 // YAMLのアンカーとエイリアス（<<: *anchor）はYAML 1.1の機能で、
 // YAML 1.2では非推奨。serde_yaml 0.9はYAML 1.2ベースのため、
 // マージキーは正しくサポートされない。これはライブラリの制限であり、
-// render-promptの機能テストとしては適切ではないため、このテストは削除。
+// rpの機能テストとしては適切ではないため、このテストは削除。
 
 /// データマージ: 配列内のオブジェクトのマージ（完全上書き）
 #[test]
@@ -437,7 +437,7 @@ users:
     let template = dir.path().join("template.txt");
     fs::write(&template, "{{ users.0.name }},{{ users.0.age }}").unwrap();
 
-    Command::cargo_bin("render-prompt")
+    Command::cargo_bin("rp")
         .unwrap()
         .arg("-t")
         .arg(&template)
